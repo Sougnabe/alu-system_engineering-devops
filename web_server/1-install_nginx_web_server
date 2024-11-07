@@ -4,5 +4,13 @@
 apt-get update -y
 apt-get install nginx -y 
 sudo ufw allow 'Nginx HTTP'
-sh -c 'echo "Holberton School" > /var/www/html/index.html'
+sh -c 'echo "<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Page Title</title>
+</head>
+<body>
+<h1>Holberton School<h1>
+</body> 
+</html>" > /var/www/html/index.html'
 service nginx restart
