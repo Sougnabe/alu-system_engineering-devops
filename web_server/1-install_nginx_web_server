@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# install nginx
+sudo apt-get update -y
+sudo apt-get install nginx -y
+
+# Create the custom HTML file with the required content
+echo "Holberton School for the win!" | sudo tee /var/www/html/index.html
+
+# Ensure Nginx is configured to use the default site on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80 default_server;/' /etc/nginx/sites-available/default
+
+# Restart Nginx using service command instead of systemctl
+sudo service nginx restart
