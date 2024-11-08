@@ -14,5 +14,5 @@ echo "<!DOCTYPE html>
 <body>
 <h1>Holberton School</h1>
 </body>
-</html>" > 
+</html>" > /var/www/html/index.html 
 service nginx restart
