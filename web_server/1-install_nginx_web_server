@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # install nginx
 
+ssh ubuntu@34.198.248.145
 apt-get -y update
 apt-get -y install nginx
 ufw enable
