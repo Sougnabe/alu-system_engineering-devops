@@ -1,19 +1,37 @@
 #!/usr/bin/env bash
-# Installs Nginx with the following configurations:
+# Creating a server with a redirect
 
-sudo apt-get update 
-sudo apt-get install -y nginx 
+# Updating all packages
+sudo apt-get update -y && sudo apt-get upgrade -y
 
+# Install Nginx
+sudo apt-get install nginx -y
+
+# Creating an index page
 echo "Holberton School" | sudo tee /var/www/html/index.html
 
-string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;"
-
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-available/default
-
+# Creating a 404 page
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\tinternal;\n\t}"
+# Write data to nginx.conf
+echo "
+events {
 
-sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-available/default
+}
 
+http {
+	server {
+		listen 80;
+
+		root /var/www/html;
+
+		error_page 404 /404.html;
+
+		location /redirect_me {
+			return 301 https://google.com;
+		}
+	}
+}" | sudo tee /etc/nginx/nginx.conf
+
+# Reload nginx
 sudo service nginx restart
