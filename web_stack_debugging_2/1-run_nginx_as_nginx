@@ -1,21 +1,7 @@
-#!/bin/bash
-# Script to configure Nginx to run as the nginx user and listen on port 8080
-
-NGINX_CONF="/etc/nginx/nginx.conf"
-
-sudo sed -i 's/^user .*/user nginx;/g' "$NGINX_CONF"
-
-DEFAULT_CONF="/etc/nginx/sites-enabled/default"
-sudo sed -i 's/listen 80;/listen 8080;/g' "$DEFAULT_CONF"
-sudo sed -i 's/listen \[::\]:80;/listen \[::\]:8080;/g' "$DEFAULT_CONF"
-
-sudo chown -R nginx:nginx /var/log/nginx /var/lib/nginx
-
-sudo service nginx restart
-
-echo "Validation:"
-echo "Processes owned by nginx:"
-pgrep -a nginx
-
-echo "Nginx listening on port 8080:"
-sudo netstat -tuln | grep 8080
+#!/usr/bin/env bash
+# Fixes a web server to run Nginx as the nginx user listening on port 8080.
+sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
+sed -i "s/80/8080/g" /etc/nginx/sites-available/default
+chmod 644 /etc/nginx/nginx.conf
+pkill apache2
+sudo -u nginx service nginx start
