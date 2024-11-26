@@ -15,7 +15,7 @@ sudo service nginx restart
 
 echo "Validation:"
 echo "Processes owned by nginx:"
-ps aux | grep nginx
+pgrep -a nginx
 
 echo "Nginx listening on port 8080:"
 sudo netstat -tuln | grep 8080
